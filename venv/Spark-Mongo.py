@@ -10,12 +10,16 @@ os.environ['HADOOP_HOME'] = 'C:/hadoop'
 # #read json from text file
 #dfFromTxt=spark.read.json("C:\\Users\me\PycharmProjects\Spark-python\AB.AB.json")
 #dfFromTxt=spark.read.format('json').load("C:\\Users\me\PycharmProjects\Spark-python\AB.AB.json")
-spark = SparkSession.builder.appName('SparkByExamples.com').master('spark://spark-master:7077')\
+spark = SparkSession.builder.appName('SparkByExamples.com')\
+    .master('spark://spark-master:7077')\
+    .config("spark.executor.memory", "2g")\
     .getOrCreate()
 dfFromTxt=spark.read.option("multiline", "true").json("C:\\Users\me\PycharmProjects\Spark-python\AB.AB.json")
 dfFromTxt.printSchema()
 dfFromTxt.cache()
 dfFromTxt.show()
+
+print(spark.range(1000 * 1000 * 1000).count())
 ###################################################
 
 ##############Reading from mongo DB collection ###################
