@@ -5,9 +5,7 @@ os.environ['HADOOP_HOME'] = 'C:/hadoop'
 
 spark = SparkSession.builder.appName('Spark.com') \
     .master('spark://spark-master:7077') \
-    .config("spark.executor.memory", "2g") \
     .getOrCreate()
-
 dfFromTxt = spark.read.option("multiline", "true").json("/opt/bitnami/spark/jobs/AB.AB.json")
 dfFromTxt.printSchema()
 dfFromTxt.cache()

@@ -9,8 +9,6 @@ os.environ['HADOOP_HOME'] = 'C:/hadoop'
 spark = SparkSession.builder.appName("Mongo_APP") \
     .config("spark.mongodb.input.uri", "mongodb+srv://Ayoub:ABB2212023@spark-test.zdf0xk9.mongodb.net/sample_mflix"
                                        ".users") \
-    .config("spark.network.maxRetries", "10") \
-    .config("spark.network.timeout", "600s") \
     .getOrCreate()
 df = spark.read.format("com.mongodb.spark.sql.DefaultSource").load()
 df.printSchema()
