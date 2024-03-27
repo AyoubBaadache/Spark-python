@@ -1,15 +1,16 @@
 version: '3'
 x-spark-common: &spark-common
-  image: bitnami/spark:latest
+  build:
+    context: .
+    dockerfile: Dockerfile
   volumes:
-    - ./resource:/opt/bitnami/spark/resource
     - ./jobs:/opt/bitnami/spark/jobs
   networks:
     - confluent
 services:
   spark-master:
     <<: *spark-common
-    image: bitnami/spark:latest
+    image: my-custom-spark-master-image
     command: bin/spark-class org.apache.spark.deploy.master.Master
     hostname: spark-master
     container_name: spark-master
@@ -20,7 +21,7 @@ services:
       - confluent
   spark-worker:
     <<: *spark-common
-    image: bitnami/spark:latest
+    image: my-custom-spark-worker-image
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     container_name: spark-worker
     depends_on:
